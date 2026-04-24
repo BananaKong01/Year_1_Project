@@ -7,6 +7,8 @@ public class GameWindow implements ActionListener {
     private GamePiece[] tiles = new GamePiece[20];
     private JPanel panel;
 
+    JLabel label = new JLabel("Value will appear here");
+
     // Object swap selection
     private int clickedIndex = -1;
     private boolean firstSelection = true;
@@ -17,14 +19,18 @@ public class GameWindow implements ActionListener {
         panel = new JPanel();
         GridLayout layout = new GridLayout(4,5);
         
-        // First set all objects to hole
-        for (int i = 0; i < tiles.length; i++) {
-            tiles[i] = new GamePiece("hole.png", 0, 0); // find formula for coords
+        int n = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                tiles[n] = new GamePiece("hole.png", i, j);
+                n++;
+            }
         }
+        
         // Replace holes based on game board (currently only level 1)
-        tiles[1] = new Snowball("snowball_small.png", 0, 0); 
-        tiles[15] = new SnowmanHead("head_blue.png", 0 ,0);
-        tiles[19] = new Snowball("snowball_large.png", 0, 0);
+        tiles[1] = new Snowball("snowball_small.png", 0, 1); 
+        tiles[15] = new SnowmanHead("head_blue.png", 3,0);
+        tiles[19] = new Snowball("snowball_large.png", 3, 4);
         
         panel.setLayout(layout);
         for (int i = 0; i < tiles.length; i++) {
@@ -40,7 +46,12 @@ public class GameWindow implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        
+
         GamePiece clicked = (GamePiece) e.getSource(); // find object clicked
+        
+        label.setText("Value: " + clicked.x + clicked.y);
+        
 
         int swapIndex = -1;
 
@@ -64,19 +75,28 @@ public class GameWindow implements ActionListener {
             }
         }
 
-        // Swap objects
-        if (object.equals("sb") == true) {
-            GamePiece temp = tiles[clickedIndex];
-            tiles[clickedIndex] = tiles[swapIndex];
-            tiles[swapIndex] = temp;
-        }
+        GamePiece temp = tiles[clickedIndex];
+        int tempX = tiles[clickedIndex].returnX();
+        int tempY = tiles[clickedIndex].returnY();
+        tiles[clickedIndex].setX(tiles[swapIndex].returnX());
+        tiles[clickedIndex].setY(tiles[swapIndex].returnY());
+        tiles[clickedIndex] = tiles[swapIndex];
+        tiles[swapIndex].setX(tempX);
+        tiles[swapIndex].setY(tempY);
+        tiles[swapIndex] = temp;
+        
 
         // Rebuild panel
         panel.removeAll();
         for (int i = 0; i < tiles.length; i++) {
             panel.add(tiles[i]);
         }
+
+        clicked.add(label); // for debugging, see coords
+
         panel.revalidate();
         panel.repaint();
+        
+
     }
 }
