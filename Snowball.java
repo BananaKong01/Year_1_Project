@@ -15,10 +15,15 @@ public class Snowball extends GamePiece {
     - No movement after it is stacked
     */
 
+   /* ---- WARNING ---- 
+   - does not check adjacency first
+   - potential solution involves moving adjacency logic to a separate method and calling before stacking
+   */
+
    @Override
    public void movement(GamePiece[] array, GamePiece first, GamePiece second) {
         // Check if need to stack
-        if (first instanceof Snowball s1 && second instanceof Snowball s2) { // Ensure first and second can be seen as Snowball class to read size
+        if (checkAdjacency(first, second) && first instanceof Snowball s1 && second instanceof Snowball s2) { // Ensure first and second can be seen as Snowball class to read size
             if (s1.size.equals("S") && s2.size.equals("L")) {
                 s2.updateImage("snowman_stack.png");
                 // Remove s1 from array, and replace with a new GamePiece

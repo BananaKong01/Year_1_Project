@@ -31,6 +31,23 @@ public class GamePiece extends JButton {
         this.y = y;
     }
 
+    public boolean checkAdjacency(GamePiece first, GamePiece second) {
+        int firstX = first.returnX();
+        int firstY = first.returnY();
+        int secondX = second.returnX();
+        int secondY = second.returnY();
+        int dx = secondX - firstX;
+        int dy = secondY - firstY;
+
+        // Check tiles are next to one another
+        if ((dx == 0 && Math.abs(dy) == 1) || (dy == 0 && Math.abs(dx) == 1)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public void movement(GamePiece[] array, GamePiece first, GamePiece second) {
         // Check GamePieces are valid (only swaps with blank tiles)
         if (first == null || second == null) {
@@ -51,7 +68,7 @@ public class GamePiece extends JButton {
         int dy = secondY - firstY;
 
         // Check tiles are next to one another
-        if (!((dx == 0 && Math.abs(dy) == 1) || (dy == 0 && Math.abs(dx) == 1))) {
+        if (!(checkAdjacency(first, second))) {
             return;
         }
 
