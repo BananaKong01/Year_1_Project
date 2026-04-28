@@ -11,6 +11,10 @@ public class GamePiece extends JButton {
         this.y = y;
     }
 
+    public void updateImage(String path) {
+        setIcon(new ImageIcon(path));
+    }
+
     public int returnX() {
         return x;
     }

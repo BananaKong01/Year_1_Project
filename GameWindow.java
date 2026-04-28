@@ -28,9 +28,9 @@ public class GameWindow implements ActionListener {
         }
         
         // Replace holes based on game board (currently only level 1)
-        tiles[1] = new Snowball("snowball_small.png", 0, 1); 
+        tiles[1] = new Snowball("snowball_small.png", 0, 1, "S"); 
         tiles[15] = new SnowmanHead("head_blue.png", 3,0);
-        tiles[19] = new Snowball("snowball_large.png", 3, 4);
+        tiles[19] = new Snowball("snowball_large.png", 3, 4, "L");
         
         panel.setLayout(layout);
         for (int i = 0; i < tiles.length; i++) {
@@ -46,13 +46,10 @@ public class GameWindow implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        
-
         GamePiece clicked = (GamePiece) e.getSource(); // find object clicked
         
-        label.setText("Value: " + clicked.x + clicked.y);
+        label.setText("Value: " + clicked.x + clicked.y); // debugging tool
         
-
         int swapIndex = -1;
 
         // Find indexes of object clicked based on whether it was selected first or second
@@ -75,7 +72,7 @@ public class GameWindow implements ActionListener {
             }
         }
 
-        GamePiece temp = tiles[clickedIndex];
+        /*GamePiece temp = tiles[clickedIndex];
         int tempX = tiles[clickedIndex].returnX();
         int tempY = tiles[clickedIndex].returnY();
         tiles[clickedIndex].setX(tiles[swapIndex].returnX());
@@ -84,7 +81,9 @@ public class GameWindow implements ActionListener {
         tiles[swapIndex].setX(tempX);
         tiles[swapIndex].setY(tempY);
         tiles[swapIndex] = temp;
-        
+        */
+        tiles[clickedIndex].movement(tiles, tiles[clickedIndex], tiles[swapIndex]);
+
 
         // Rebuild panel
         panel.removeAll();
