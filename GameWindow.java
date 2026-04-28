@@ -56,7 +56,7 @@ public class GameWindow implements ActionListener {
         for (int i = 0; i < tiles.length; i++) {
             if (tiles[i] == clicked) {
                 if (firstSelection == true) {
-                    if (clicked.getClass() == Snowball.class) {
+                    if (clicked.getClass() == Snowball.class || clicked.getClass() == SnowmanHead.class) {
                         object = "sb";
                         clickedIndex = i;
                         firstSelection = false;

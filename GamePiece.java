@@ -112,6 +112,15 @@ public class GamePiece extends JButton {
         if (nextSwap != null) {
             movement(array, first, nextSwap);
         }
+        else {
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] == first) {
+                    int a = first.returnX();
+                    int b = first.returnY();
+                    array[i] = new GamePiece("hole.png", a, b);
+                }
+            }
+        }
     }
 
 }

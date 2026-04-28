@@ -8,6 +8,4 @@ public class Tree extends GamePiece {
     public Tree(String path, int x, int y) {
         super(path, x, y);
     }
-
-    /* -No Movement Required- */
 }
