@@ -111,6 +111,9 @@ public class GamePiece extends JButton {
 
         if (nextSwap != null) {
             movement(array, first, nextSwap);
+            if (first instanceof Snowball s) {
+                s.setMove(true);
+            }
         }
         else {
             for (int i = 0; i < array.length; i++) {
