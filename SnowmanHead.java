@@ -1,6 +1,8 @@
 public class SnowmanHead extends GamePiece {
+    String colour;
     // Constructor Method
-    public SnowmanHead(String path, int x, int y) {
+    public SnowmanHead(String path, int x, int y, String colour) {
+        this.colour = colour;
         super(path, x, y);
     }
 
@@ -10,7 +12,13 @@ public class SnowmanHead extends GamePiece {
     public void movement(GamePiece[] array, GamePiece first, GamePiece second) {
         if (checkAdjacency(first, second) && first instanceof SnowmanHead s1 && second instanceof Snowball s2) {
             if (s2.getStack() == true) {
-                s2.updateImage("snowman_blue.png");
+                if (colour.equals("blue")) {
+                    s2.updateImage("snowman_blue.png");
+                } else if (colour.equals("red")) {
+                    s2.updateImage("snowman_red.png");
+                } else if (colour.equals("yellow")) {
+                    s2.updateImage("snowman_yellow.png");
+                }
                 // Remove s1 from array, and replace with a new GamePiece
                 for (int i = 0; i < array.length; i++) {
                     if (array[i] == s1) {

@@ -116,6 +116,7 @@ public class GamePiece extends JButton {
             }
         }
         else {
+            // Remove snowball on movement off of board
             for (int i = 0; i < array.length; i++) {
                 if (array[i] == first) {
                     int a = first.returnX();

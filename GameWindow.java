@@ -19,7 +19,9 @@ public class GameWindow implements ActionListener {
         panel = new JPanel();
         GridLayout layout = new GridLayout(4,5);
         
-        int n = 0;
+        Level level = new Level(tiles, 3);
+
+        /*int n = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 tiles[n] = new GamePiece("hole.png", i, j);
@@ -31,7 +33,8 @@ public class GameWindow implements ActionListener {
         tiles[1] = new Snowball("snowball_small.png", 0, 1, "S"); 
         tiles[15] = new SnowmanHead("head_blue.png", 3,0);
         tiles[19] = new Snowball("snowball_large.png", 3, 4, "L");
-        
+        */
+
         panel.setLayout(layout);
         for (int i = 0; i < tiles.length; i++) {
             panel.add(tiles[i]);
@@ -47,8 +50,6 @@ public class GameWindow implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         GamePiece clicked = (GamePiece) e.getSource(); // find object clicked
-        
-        label.setText("Value: " + clicked.x + clicked.y); // debugging tool
         
         int swapIndex = -1;
 
@@ -72,26 +73,13 @@ public class GameWindow implements ActionListener {
             }
         }
 
-        /*GamePiece temp = tiles[clickedIndex];
-        int tempX = tiles[clickedIndex].returnX();
-        int tempY = tiles[clickedIndex].returnY();
-        tiles[clickedIndex].setX(tiles[swapIndex].returnX());
-        tiles[clickedIndex].setY(tiles[swapIndex].returnY());
-        tiles[clickedIndex] = tiles[swapIndex];
-        tiles[swapIndex].setX(tempX);
-        tiles[swapIndex].setY(tempY);
-        tiles[swapIndex] = temp;
-        */
         tiles[clickedIndex].movement(tiles, tiles[clickedIndex], tiles[swapIndex]);
-
 
         // Rebuild panel
         panel.removeAll();
         for (int i = 0; i < tiles.length; i++) {
             panel.add(tiles[i]);
         }
-
-        clicked.add(label); // for debugging, see coords
 
         panel.revalidate();
         panel.repaint();
