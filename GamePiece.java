@@ -5,6 +5,8 @@ public class GamePiece extends JButton {
     protected int x; // (0, 0) top left 
     protected int y;
 
+    private boolean offBoard = false;
+
     public GamePiece(String path, int x, int y) {
         super(new ImageIcon(path));
         this.x =  x;
@@ -122,9 +124,18 @@ public class GamePiece extends JButton {
                     int a = first.returnX();
                     int b = first.returnY();
                     array[i] = new GamePiece("hole.png", a, b);
+                    array[i].offBoard = true;
                 }
             }
         }
     }
 
+    public String checkLoss() {
+        if (offBoard == true) {
+            return "L"; 
+        }
+        else {
+            return "N/A";
+        }
+    }
 }

@@ -3,6 +3,7 @@ public class Snowball extends GamePiece {
     private String size; 
     private boolean stack = false;
     private boolean firstMove = true;
+    private boolean snowman = false;
 
     // Constructor Method
     public Snowball(String path, int x, int y, String size) {
@@ -20,6 +21,14 @@ public class Snowball extends GamePiece {
 
     public void setMove(boolean move) {
         firstMove = move;
+    }
+
+    public void setSnowman() {
+        snowman = true;
+    }
+
+    public boolean getSnowman() {
+        return snowman;
     }
 
     @Override

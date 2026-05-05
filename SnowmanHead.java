@@ -1,5 +1,6 @@
 public class SnowmanHead extends GamePiece {
-    String colour;
+    private String colour;
+
     // Constructor Method
     public SnowmanHead(String path, int x, int y, String colour) {
         this.colour = colour;
@@ -19,6 +20,7 @@ public class SnowmanHead extends GamePiece {
                 } else if (colour.equals("yellow")) {
                     s2.updateImage("snowman_yellow.png");
                 }
+                s2.setSnowman();
                 // Remove s1 from array, and replace with a new GamePiece
                 for (int i = 0; i < array.length; i++) {
                     if (array[i] == s1) {

@@ -6,49 +6,39 @@ public class GameWindow implements ActionListener {
     // UI variables
     private GamePiece[] tiles = new GamePiece[20];
     private JPanel panel;
-
-    JLabel label = new JLabel("Value will appear here");
+    private Menu menu;
 
     // Object swap selection
     private int clickedIndex = -1;
     private boolean firstSelection = true;
     private String object;
 
-    public GameWindow() {
+    public GameWindow(int levelSelect, Menu menu) {
+        this.menu = menu;
         JFrame window = new JFrame();
         panel = new JPanel();
         GridLayout layout = new GridLayout(4,5);
-        
-        Level level = new Level(tiles, 3);
-
-        /*int n = 0;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                tiles[n] = new GamePiece("hole.png", i, j);
-                n++;
-            }
-        }
-        
-        // Replace holes based on game board (currently only level 1)
-        tiles[1] = new Snowball("snowball_small.png", 0, 1, "S"); 
-        tiles[15] = new SnowmanHead("head_blue.png", 3,0);
-        tiles[19] = new Snowball("snowball_large.png", 3, 4, "L");
-        */
-
         panel.setLayout(layout);
+        
+        Level level = new Level(tiles, levelSelect);
+
+        //panel.setLayout(layout);
         for (int i = 0; i < tiles.length; i++) {
             panel.add(tiles[i]);
             tiles[i].addActionListener(this); 
         }
 
-        window.setSize(475, 400);
+        /*window.setSize(475, 400);
         window.setContentPane(panel);
-        window.setVisible(true);
+        window.setVisible(true);*/
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         GamePiece clicked = (GamePiece) e.getSource(); // find object clicked
         
         int swapIndex = -1;
@@ -74,6 +64,26 @@ public class GameWindow implements ActionListener {
         }
 
         tiles[clickedIndex].movement(tiles, tiles[clickedIndex], tiles[swapIndex]);
+        
+        for (int i = 0; i < tiles.length; i++) {
+            String status = tiles[i].checkLoss();
+            if (status.equals("L")) {
+                loss();
+            }
+        }
+
+        boolean win = true;
+        for (int i = 0; i < tiles.length; i++) {
+            if (tiles[i] instanceof Snowball s) {
+                if (s.getSnowman() == false) {
+                    win = false;
+                }
+            }
+            if (win == true) {
+                win();
+            }
+
+        }
 
         // Rebuild panel
         panel.removeAll();
@@ -85,5 +95,13 @@ public class GameWindow implements ActionListener {
         panel.repaint();
         
 
+    }
+
+    public void loss() {
+        menu.changeToMenu();
+    }
+
+    public void win() {
+        menu.showLeaderboard();
     }
 }
