@@ -7,6 +7,7 @@ public class GameWindow implements ActionListener {
     private GamePiece[] tiles = new GamePiece[20];
     private JPanel panel;
     private Menu menu;
+    //private JTextArea moveDisplay;
 
     // Object swap selection
     private int clickedIndex = -1;
@@ -14,6 +15,7 @@ public class GameWindow implements ActionListener {
     private String object;
 
     private int moveCount = 0;
+    private JLabel moveDisplay;
 
     public GameWindow(int levelSelect, Menu menu) {
         this.menu = menu;
@@ -29,6 +31,9 @@ public class GameWindow implements ActionListener {
             panel.add(tiles[i]);
             tiles[i].addActionListener(this); 
         }
+
+        moveDisplay = new JLabel(String.valueOf(moveCount));
+        tiles[0].add(moveDisplay);
 
         /*window.setSize(475, 400);
         window.setContentPane(panel);
@@ -94,6 +99,9 @@ public class GameWindow implements ActionListener {
         for (int i = 0; i < tiles.length; i++) {
             panel.add(tiles[i]);
         }
+
+        moveDisplay.setText(String.valueOf(moveCount));
+        tiles[0].add(moveDisplay);
 
         panel.revalidate();
         panel.repaint();
