@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Menu implements ActionListener {
     
-    JFrame window = new JFrame("Game");
+    JFrame window = new JFrame("Snow Problem");
     CardLayout cardLayout = new CardLayout();
     JPanel mainPanel = new JPanel(cardLayout);
 
@@ -13,14 +13,13 @@ public class Menu implements ActionListener {
 
     public Menu() {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(475, 400);
+        window.setSize(800, 600);
 
         //Add buttons to menu panel
         JPanel menuPanel = new JPanel();
         JButton playButton = new JButton("Play");
         menuPanel.add(playButton);
         menuPanel.add(levelBox);
-
 
         //Add menu panel to layout
         mainPanel.add(menuPanel, "Menu");
@@ -55,7 +54,15 @@ public class Menu implements ActionListener {
     }
 
     public void showLeaderboard() {
-        //do stuff here
+        Leaderboard l = new Leaderboard(this);      
+        mainPanel.add(l.getPanel(), "Leaderboard");
+        cardLayout.show(mainPanel, "Leaderboard");
+
+        l.updateLeaderboard(3);
         System.out.println("WINNER");
+    }
+
+    public void changeToLeaderboard() {
+        cardLayout.show(mainPanel, "Leaderboard");
     }
 }

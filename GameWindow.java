@@ -79,10 +79,9 @@ public class GameWindow implements ActionListener {
                     win = false;
                 }
             }
-            if (win == true) {
-                win();
-            }
-
+        }
+        if (win == true) {
+            win();
         }
 
         // Rebuild panel
