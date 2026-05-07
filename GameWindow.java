@@ -13,6 +13,8 @@ public class GameWindow implements ActionListener {
     private boolean firstSelection = true;
     private String object;
 
+    private int moveCount = 0;
+
     public GameWindow(int levelSelect, Menu menu) {
         this.menu = menu;
         JFrame window = new JFrame();
@@ -64,6 +66,9 @@ public class GameWindow implements ActionListener {
         }
 
         tiles[clickedIndex].movement(tiles, tiles[clickedIndex], tiles[swapIndex]);
+
+        moveCount++;
+        System.out.println(moveCount);
         
         for (int i = 0; i < tiles.length; i++) {
             String status = tiles[i].checkLoss();
@@ -101,6 +106,6 @@ public class GameWindow implements ActionListener {
     }
 
     public void win() {
-        menu.showLeaderboard();
+        menu.showLeaderboard(moveCount);
     }
 }

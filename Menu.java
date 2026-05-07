@@ -53,12 +53,12 @@ public class Menu implements ActionListener {
         cardLayout.show(mainPanel, "Menu");
     }
 
-    public void showLeaderboard() {
+    public void showLeaderboard(int score) {
         Leaderboard l = new Leaderboard(this);      
         mainPanel.add(l.getPanel(), "Leaderboard");
         cardLayout.show(mainPanel, "Leaderboard");
 
-        l.updateLeaderboard(3);
+        l.updateLeaderboard(score);
         System.out.println("WINNER");
     }
 
