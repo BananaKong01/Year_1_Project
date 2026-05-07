@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Leaderboard /*implements ActionListener*/ {
+public class Leaderboard implements ActionListener {
     private JPanel panel;
     private Menu menu;
     private JButton restartButton;
@@ -24,8 +24,9 @@ public class Leaderboard /*implements ActionListener*/ {
         panel = new JPanel();
         panel.add(textArea);
 
-        /*restartButton.addActionListener(this);
-        panel.add(restartButton);*/
+        restartButton = new JButton("Restart");
+        restartButton.addActionListener(this);
+        panel.add(restartButton);
 
         textArea.setText("");
         try (Scanner myReader = new Scanner(myObj)) {
@@ -94,10 +95,10 @@ public class Leaderboard /*implements ActionListener*/ {
         }
     }
 
-    /*@Override
+    @Override
     public void actionPerformed(ActionEvent e) {
         menu.changeToMenu();
-    }*/
+    }
 
     
 }
