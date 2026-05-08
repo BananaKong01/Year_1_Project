@@ -17,6 +17,8 @@ public class GameWindow implements ActionListener {
     private int moveCount = 0;
     private JLabel moveDisplay;
 
+    private int levelNumber;
+
     public GameWindow(int levelSelect, Menu menu) {
         this.menu = menu;
         JFrame window = new JFrame();
@@ -25,6 +27,7 @@ public class GameWindow implements ActionListener {
         panel.setLayout(layout);
         
         Level level = new Level(tiles, levelSelect);
+        levelNumber = levelSelect;
 
         //panel.setLayout(layout);
         for (int i = 0; i < tiles.length; i++) {
@@ -114,6 +117,6 @@ public class GameWindow implements ActionListener {
     }
 
     public void win() {
-        menu.showLeaderboard(moveCount);
+        menu.showLeaderboard(moveCount, levelNumber);
     }
 }

@@ -19,7 +19,6 @@ public class Level {
             int fileLine = 1;
             while (myReader.hasNextLine()) {
                 data = myReader.nextLine();
-                System.out.println(data);
                 if (fileLine == level) {
                     break;
                 } 

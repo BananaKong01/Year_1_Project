@@ -7,6 +7,9 @@ import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Leaderboard implements ActionListener {
     private JPanel panel;
@@ -46,16 +49,26 @@ public class Leaderboard implements ActionListener {
         return panel;
     }
 
-    public void updateLeaderboard(int score) {
+    public void updateLeaderboard(int score, int level) {
         String[] topFive = new String[5];
         File file = new File("leaderboard.txt");
 
-        try (Scanner myReader = new Scanner(file)) {
+        /*try (Scanner myReader = new Scanner(file)) {
             for (int i = 0; i < topFive.length; i++) {
                 topFive[i] = myReader.nextLine();
             }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
+            e.printStackTrace();
+        }*/
+
+        try {
+            topFive[0] = Files.readAllLines(Paths.get("leaderboard.txt")).get(((level-1)*5));
+            topFive[1] = Files.readAllLines(Paths.get("leaderboard.txt")).get(((level-1)*5)+1);
+            topFive[2] = Files.readAllLines(Paths.get("leaderboard.txt")).get(((level-1)*5)+2);
+            topFive[3] = Files.readAllLines(Paths.get("leaderboard.txt")).get(((level-1)*5)+3);
+            topFive[4] = Files.readAllLines(Paths.get("leaderboard.txt")).get(((level-1)*5)+4);
+        } catch (IOException e) {
             e.printStackTrace();
         }
             
