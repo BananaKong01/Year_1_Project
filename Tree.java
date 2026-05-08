@@ -1,4 +1,4 @@
-
+// Class only used for name comparisons between subclasses of GamePiece
 public class Tree extends GamePiece {
     private String path;
     private int x;

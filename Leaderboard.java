@@ -10,8 +10,10 @@ import java.awt.event.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ServiceConfigurationError;
 
 public class Leaderboard implements ActionListener {
+    // Swing variables
     private JPanel panel;
     private Menu menu;
     private JButton restartButton;
@@ -19,23 +21,23 @@ public class Leaderboard implements ActionListener {
 
     public Leaderboard(Menu m) {
         menu = m;
-        File myObj = new File("leaderboard.txt");
+        File file = new File("leaderboard.txt");
         String data = null;
 
+        // Add UI elements
         textArea.setEditable(false);
-
         panel = new JPanel();
         panel.add(textArea);
-
         restartButton = new JButton("Restart");
         restartButton.addActionListener(this);
         panel.add(restartButton);
 
+        // Display current leaders on creation
         textArea.setText("");
-        try (Scanner myReader = new Scanner(myObj)) {
+        try (Scanner scanner = new Scanner(file)) {
             int fileLine = 1;
-            while (myReader.hasNextLine() && fileLine != 6) {
-                data = myReader.nextLine();
+            while (scanner.hasNextLine() && fileLine != 6) {
+                data = scanner.nextLine();
                 textArea.append(data + "\n");
                 fileLine++;
             }
@@ -49,19 +51,12 @@ public class Leaderboard implements ActionListener {
         return panel;
     }
 
+    // Check if score is lower than any current ones, and replace accordingly
     public void updateLeaderboard(int score, int level) {
         String[] topFive = new String[5];
         File file = new File("leaderboard.txt");
 
-        /*try (Scanner myReader = new Scanner(file)) {
-            for (int i = 0; i < topFive.length; i++) {
-                topFive[i] = myReader.nextLine();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }*/
-
+        // Get current scores
         try {
             topFive[0] = Files.readAllLines(Paths.get("leaderboard.txt")).get(((level-1)*5));
             topFive[1] = Files.readAllLines(Paths.get("leaderboard.txt")).get(((level-1)*5)+1);
@@ -72,6 +67,7 @@ public class Leaderboard implements ActionListener {
             e.printStackTrace();
         }
             
+        // If a lower score is found, it is replaced
         for (int i = 0; i < topFive.length; i++) {
             int comparison = Integer.parseInt(topFive[i]); 
             if (comparison > score) {
@@ -80,12 +76,12 @@ public class Leaderboard implements ActionListener {
             }
         }
 
-
+        // Update text file
         textArea.setText("");
-        try (FileWriter myWriter = new FileWriter(file)) {
+        try (FileWriter scanner = new FileWriter(file)) {
             for (int i = 0; i < topFive.length; i++) {
-                myWriter.write(topFive[i]);
-                myWriter.write("\n");
+                scanner.write(topFive[i]);
+                scanner.write("\n");
             }
 
         } catch (IOException e) {
@@ -95,10 +91,11 @@ public class Leaderboard implements ActionListener {
 
         String data = null;
 
-        try (Scanner myReader = new Scanner(file)) {
+        // Display leaders after updates
+        try (Scanner scanner = new Scanner(file)) {
             int fileLine = 1;
-            while (myReader.hasNextLine() && fileLine != 6) {
-                data = myReader.nextLine();
+            while (scanner.hasNextLine() && fileLine != 6) {
+                data = scanner.nextLine();
                 textArea.append(data + "\n");
                 fileLine++;
             }
@@ -108,6 +105,7 @@ public class Leaderboard implements ActionListener {
         }
     }
 
+    // Restart button logic
     @Override
     public void actionPerformed(ActionEvent e) {
         menu.changeToMenu();

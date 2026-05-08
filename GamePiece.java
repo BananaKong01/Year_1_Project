@@ -111,6 +111,7 @@ public class GamePiece extends JButton {
             }
         }
 
+        // Recursively call next move
         if (nextSwap != null) {
             movement(array, first, nextSwap);
             if (first instanceof Snowball s) {

@@ -7,53 +7,57 @@ public class GameWindow implements ActionListener {
     private GamePiece[] tiles = new GamePiece[20];
     private JPanel panel;
     private Menu menu;
-    //private JTextArea moveDisplay;
 
     // Object swap selection
     private int clickedIndex = -1;
     private boolean firstSelection = true;
     private String object;
 
+    // Move count variables
     private int moveCount = 0;
     private JLabel moveDisplay;
 
+    // Level variables
     private int levelNumber;
 
+    // Constructor
     public GameWindow(int levelSelect, Menu menu) {
+        // Assign swing variables
         this.menu = menu;
         JFrame window = new JFrame();
         panel = new JPanel();
         GridLayout layout = new GridLayout(4,5);
         panel.setLayout(layout);
         
+        // Assign level
         Level level = new Level(tiles, levelSelect);
         levelNumber = levelSelect;
 
-        //panel.setLayout(layout);
+        // Iterate through array to add tiles
         for (int i = 0; i < tiles.length; i++) {
             panel.add(tiles[i]);
             tiles[i].addActionListener(this); 
         }
 
+        // Display move count on UI
         moveDisplay = new JLabel(String.valueOf(moveCount));
         tiles[0].add(moveDisplay);
-
-        /*window.setSize(475, 400);
-        window.setContentPane(panel);
-        window.setVisible(true);*/
     }
 
+    // Return panel
     public JPanel getPanel() {
         return panel;
     }
 
+    // Determining what objects should be swapped
     @Override
     public void actionPerformed(ActionEvent e) {
-        GamePiece clicked = (GamePiece) e.getSource(); // find object clicked
+        // Find object clicked
+        GamePiece clicked = (GamePiece) e.getSource();
         
         int swapIndex = -1;
 
-        // Find indexes of object clicked based on whether it was selected first or second
+        // Find indexes of object clicked based on whether it was selected first or second, and if it is valid to move
         for (int i = 0; i < tiles.length; i++) {
             if (tiles[i] == clicked) {
                 if (firstSelection == true) {
@@ -73,11 +77,14 @@ public class GameWindow implements ActionListener {
             }
         }
 
+        // Call movement
         tiles[clickedIndex].movement(tiles, tiles[clickedIndex], tiles[swapIndex]);
 
+        // Increase move count
         moveCount++;
         System.out.println(moveCount);
         
+        // Check game is not lost
         for (int i = 0; i < tiles.length; i++) {
             String status = tiles[i].checkLoss();
             if (status.equals("L")) {
@@ -85,6 +92,7 @@ public class GameWindow implements ActionListener {
             }
         }
 
+        // Check whether win has occcured
         boolean win = true;
         for (int i = 0; i < tiles.length; i++) {
             if (tiles[i] instanceof Snowball s) {
@@ -112,6 +120,7 @@ public class GameWindow implements ActionListener {
 
     }
 
+    // Methods to call different UI displays
     public void loss() {
         menu.changeToMenu();
     }

@@ -7,11 +7,11 @@ public class SnowmanHead extends GamePiece {
         super(path, x, y);
     }
 
-    // Movement Method
-    /* Can only move onto stack next to it*/
+    // Overrides any other movement method and does not call them (unique movement)
     @Override
     public void movement(GamePiece[] array, GamePiece first, GamePiece second) {
         if (checkAdjacency(first, second) && first instanceof SnowmanHead s1 && second instanceof Snowball s2) {
+            // Check second gamePiece is stacked snowballs
             if (s2.getStack() == true) {
                 if (colour.equals("blue")) {
                     s2.updateImage("snowman_blue.png");

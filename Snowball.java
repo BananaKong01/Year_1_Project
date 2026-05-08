@@ -1,6 +1,7 @@
 public class Snowball extends GamePiece {
     // Variable that defines large or small snowball
     private String size; 
+
     private boolean stack = false;
     private boolean firstMove = true;
     private boolean snowman = false;
@@ -11,6 +12,7 @@ public class Snowball extends GamePiece {
         super(path, x, y);
     }
 
+    // Methods that control whether it is shown as a snowball stack or not
     public boolean getStack() {
         return stack;
     }
@@ -23,6 +25,7 @@ public class Snowball extends GamePiece {
         firstMove = move;
     }
 
+    // Methods that control whether it is shown as a complete snowman
     public void setSnowman() {
         snowman = true;
     }
@@ -33,6 +36,7 @@ public class Snowball extends GamePiece {
 
     @Override
     public void movement(GamePiece[] array, GamePiece first, GamePiece second) {
+        // Only happens on first move of snowball (cannot stack if moved multiple times)
         if (getMove() == true) {
             // Check if need to stack
             if (getStack() == false) {
@@ -57,6 +61,7 @@ public class Snowball extends GamePiece {
             }
         }
         firstMove = false;
+        // Calls rest of movement from GamePiece
         super.movement(array, first, second);
    }
 

@@ -4,10 +4,12 @@ import javax.swing.*;
 
 public class Menu implements ActionListener {
     
+    // Add CardLayout (holds multiple different layouts)
     JFrame window = new JFrame("Snow Problem");
     CardLayout cardLayout = new CardLayout();
     JPanel mainPanel = new JPanel(cardLayout);
 
+    // Hold selection of each level in drop-down box
     String[] levels = {"Level 1", "Level 2", "Level 3","Level 4","Level 5","Level 6","Level 7","Level 8","Level 9","Level 10"
     ,"Level 11", "Level 12", "Level 13","Level 14","Level 15","Level 16","Level 17","Level 18","Level 19","Level 20"
     ,"Level 21", "Level 22", "Level 23","Level 24","Level 25","Level 26","Level 27","Level 28","Level 29","Level 30"
@@ -23,28 +25,28 @@ public class Menu implements ActionListener {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(800, 600);
 
-        //Add buttons to menu panel
+        // Add buttons to menu panel
         JPanel menuPanel = new JPanel();
         JButton playButton = new JButton("Play");
         menuPanel.add(playButton);
         menuPanel.add(levelBox);
 
-        //Add menu panel to layout
+        // Add menu panel to layout
         mainPanel.add(menuPanel, "Menu");
 
-        //Switch to game when button is clicked
+        // Switch to game when button is clicked
         playButton.addActionListener(this);
 
-        //Add layout to window
+        // Add layout to window
         window.add(mainPanel);
         window.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Get index of array
+        // Get index of array
         int selectedIndex = levelBox.getSelectedIndex();
-        //Add one to index to find level number
+        // Add one to index to find level number
         int selectedLevel = levelBox.getSelectedIndex() + 1;
 
         // Game Panel
@@ -53,24 +55,25 @@ public class Menu implements ActionListener {
         // Add panel to layout
         mainPanel.add(g.getPanel(), "Game");
 
-        //Add layout to window
+        // Add layout to window
         cardLayout.show(mainPanel, "Game");
     };
 
-    public void changeToMenu() {
-        cardLayout.show(mainPanel, "Menu");
-    }
-
+    // Display leaderboard, and update accordingly
     public void showLeaderboard(int score, int level) {
         Leaderboard l = new Leaderboard(this);      
         mainPanel.add(l.getPanel(), "Leaderboard");
         cardLayout.show(mainPanel, "Leaderboard");
 
         l.updateLeaderboard(score, level);
-        System.out.println("WINNER");
     }
 
+    // Methods to change card layout
     public void changeToLeaderboard() {
         cardLayout.show(mainPanel, "Leaderboard");
+    }  
+    
+    public void changeToMenu() {
+        cardLayout.show(mainPanel, "Menu");
     }
 }

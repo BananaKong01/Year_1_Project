@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Level {
     public Level(GamePiece[] array, int level) {
+        // Turn all tiles to basic hole to begin
         int n = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
@@ -12,19 +13,22 @@ public class Level {
             }
         }
 
-        File myObj = new File("levels.txt");
+        File file = new File("levels.txt");
         String data = null;
 
-        try (Scanner myReader = new Scanner(myObj)) {
+
+        // Read file until correct line is found
+        try (Scanner scanner = new Scanner(file)) {
             int fileLine = 1;
-            while (myReader.hasNextLine()) {
-                data = myReader.nextLine();
+            while (scanner.hasNextLine()) {
+                data = scanner.nextLine();
                 if (fileLine == level) {
                     break;
                 } 
                 fileLine++;
             }
 
+            // Read each character and update tiles accordingly
             for (int i = 0; i < 20; i++) {
                 if (data != null) {
                     char current = data.charAt(i);
